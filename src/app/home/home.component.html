@@ -1,0 +1,47 @@
+
+<div class="BtnsForAll">
+<div class="btns">
+<button class="All" (click)="filterByCategory(0)">All</button>
+
+  <button 
+    class="fetchedBtns" 
+    *ngFor="let el of categories" 
+    (click)="filterByCategory(el.id)">
+    {{ el.name }}
+  </button>
+</div>
+</div>
+<div class="filteredBoxes">
+<div class="filterBox">
+  <div class="spicy">
+      <label>Spiciness: {{ spiciness }}</label>
+      <input type="range" min="0" max="4" step="1" class="inputRange" [(ngModel)]="spiciness">
+    </div>
+
+    <div class="nuts">
+      <input type="checkbox" [(ngModel)]="nuts">
+      <label>No nuts</label>
+    </div>
+
+    <div class="vegetarian">
+      <input type="checkbox" [(ngModel)]="vegetarian">
+      <label>Vegetarian only</label>
+    </div>
+
+    <button class="filterBtn" (click)="filterBtn()">Filter</button>
+    <button class="Reset" (click)="resetFilters()">Reset</button>
+</div>
+</div>
+<div class="flexcards">
+<div class="cards">
+  <div class="card" *ngFor="let product of products">
+    <img src="{{ product.image }}" alt="{{product.name}}">
+    <h3>{{ product.name }}</h3>
+    <p>Nuts: {{ product.nuts }}</p>
+    <p>Vegetarian: {{product.vegeterian}}</p>
+    <p>Price: {{ product.price | currency:'GEL' }}</p>
+    <p>Spiciness: {{product.spiciness}}</p>
+    <button class="btn" (click)="addToCart(product)">Add to Cart</button>
+  </div>
+</div>
+</div>

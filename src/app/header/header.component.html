@@ -1,0 +1,25 @@
+<nav>
+  <div class="logo">
+    <h2>Restaurant</h2>
+  </div>
+
+  <ul class="nav-links">
+    <li><a routerLink="/" routerLinkActive="active">Home</a></li>
+    <li><a routerLink="/cart" routerLinkActive="active">Cart</a></li>
+  </ul>
+
+  <div class="mobile-burger" (click)="toggleMenu()">
+    <button class="hamburger hamburger--elastic" type="button" aria-label="Menu"
+            [class.is-active]="isMenuOpen">
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" [ngClass]="{'open': isMenuOpen}">
+  <ul>
+    <li><a routerLink="/" routerLinkActive="active" (click)="toggleMenu()">Home</a></li>
+    <li><a routerLink="/cart" routerLinkActive="active" (click)="toggleMenu()">Cart</a></li>
+  </ul>
+</div>
