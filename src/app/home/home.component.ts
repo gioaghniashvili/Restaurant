@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Category } from '../models/category';
 import { Product } from '../models/products';
@@ -7,7 +6,8 @@ import { CategoryService } from '../services/category.service';
 import { ProductService } from '../services/product.service';
 import { FormsModule } from '@angular/forms';
 import { Basket } from '../models/basket';
-
+import { BasketService } from '../services/basket.service';
+import Swal from 'sweetalert2';
 @Component({
     selector: 'app-home',
     standalone: true,
@@ -19,6 +19,7 @@ import { Basket } from '../models/basket';
 export class HomeComponent {
 
   constructor(
+      private basketService: BasketService,
       private categoryService: CategoryService,
       private productService: ProductService
   )   { }
@@ -59,33 +60,15 @@ filterBtn() {
 
   resetFilters() {
        this.productService.getdata('https://restaurant.stepprojects.ge/api/Products/GetAll').subscribe((data: any) => {
-            this.products = data;
+       this.products = data;
+      this.vegetarian = false;
+      this.nuts = false;
+      this.spiciness = Number(null);
+      console.log(this.products)
     })
 
 }
-
-
-
-  addToCart(product: Product) {
-     const cart: Basket[] = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItem = cart.find(item => item.productId === product.id);
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        const newItem: Basket = {
-            productId: product.id,
-            name: product.name,
-            image: product.image,
-            price: product.price,
-            quantity: 1
-        };
-        cart.push(newItem);
-    }
-    localStorage.setItem('cart', JSON.stringify(cart));      
-  }
-
-
-  getProductsByCategory(categoryId: number): Product[] {
+getProductsByCategory(categoryId: number){
     return this.products.filter(product => product.categoryId === categoryId);
   }
 
@@ -104,6 +87,51 @@ filterByCategory(categoryId: number) {
     }
   );
 }
+  
+addToCart(product: Product) {
+  if (!localStorage.getItem("token")) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Oops...',
+      text: 'Please log in to add items to your cart!',
+      confirmButtonText: 'Go to Login'
+    }).then(() => {
+      window.location.href = "/login";
+    });
+    return;
+  }
+
+  this.basketService.getBasket().subscribe(cartItems => {
+    let existingItem = cartItems.find(item => item.product.id === product.id);
+
+    if (existingItem) {
+      let updatedQty = existingItem.quantity + 1;
+      this.basketService.updateItem(product.id, updatedQty, updatedQty * product.price)
+        .subscribe(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Updated!',
+            text: `${product.name} quantity updated in cart.`,
+            timer: 700,
+            showConfirmButton: false
+          });
+        });
+    }
+    else {
+      this.basketService.addItem(product.id, 1, product.price)
+        .subscribe(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Added!',
+            text: `${product.name} added to cart.`,
+            timer: 700,      
+            showConfirmButton: false
+          });
+        });
+    }
+  });
+}
+
 
 
 

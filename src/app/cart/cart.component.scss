@@ -1,10 +1,10 @@
 .cart-table-container {
   max-width: 900px;
   margin: 2rem auto;
-  border: 1px solid #ddd;
+  border: 1px solid #f08a5d;
   border-radius: 10px;
   overflow: hidden;
-  background: #fff;
+  background: #fff0e6; 
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 
   .cart-table {
@@ -14,11 +14,12 @@
     th, td {
       padding: 12px 15px;
       text-align: center;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #f08a5d;
     }
 
     th {
-      background-color: #f7f7f7;
+      background-color: #ce754f; 
+      color: #fff; 
       font-weight: 600;
     }
 
@@ -29,13 +30,13 @@
     .quantity-input {
       width: 60px;
       padding: 5px;
-      border: 1px solid #ccc;
+      border: 1px solid #f08a5d;
       border-radius: 5px;
       text-align: center;
     }
 
     .remove-btn {
-      background-color: #ff4d4d;
+      background-color: #e74c3c; 
       color: white;
       border: none;
       padding: 5px 10px;
@@ -44,7 +45,7 @@
       transition: all 0.2s;
 
       &:hover {
-        background-color: #ff1a1a;
+        background-color: darken(#e74c3c, 5%);
       }
     }
   }
@@ -58,7 +59,7 @@
     font-weight: 600;
 
     .clearCartBtn {
-      background-color: #333;
+      background-color: #f08a5d;
       color: white;
       border: none;
       padding: 8px 15px;
@@ -67,11 +68,12 @@
       transition: all 0.2s;
 
       &:hover {
-        background-color: #555;
+        background-color: darken(#f08a5d, 5%);
       }
     }
   }
 }
+
 .makeImageSmaller{
     width: 50px;
     height: 50px;
@@ -81,7 +83,7 @@
 }
 
 .checkoutBtn{
-    background-color: #28a745;
+    background-color: #ce754f;
     color: white;
     border: none;
     padding: 8px 15px;
@@ -91,6 +93,19 @@
     margin-left: 10px;
 
     &:hover {
-      background-color: #218838;
+      background-color: darken(#ce754f, 5%);
     }
+}
+.product-image{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+
+.product-info{
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

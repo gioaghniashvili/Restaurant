@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-header',
   imports: [CommonModule, RouterLink, RouterLinkActive],
@@ -15,6 +17,23 @@ export class HeaderComponent {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  registerLinkVisible() {
+    return window.location.pathname !== '/login' && window.location.pathname !== '/register';
+  }
 
-  
+  logOut() {
+    localStorage.removeItem("token");
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Logged Out Successfully',
+      showConfirmButton: true
+    }).then(() => {
+      window.location.reload();
+    });
+  }
+
+  get isLoggedIn() {
+    return !!localStorage.getItem('token');
+  }
 }

@@ -1,90 +1,82 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import { BasketService } from '../services/basket.service';
 import { Basket } from '../models/basket';
 
 @Component({
   selector: 'app-cart',
-  imports: [FormsModule, RouterLink, RouterLinkActive, CommonModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
-export class CartComponent {
-  isLoading: boolean = false;
+export class CartComponent implements OnInit {
   cartItems: Basket[] = [];
+  isLoading: boolean = false;
   total: number = 0;
 
-  constructor(private cartService: BasketService) {}
+  constructor(private basketService: BasketService) {}
 
   ngOnInit() {
     this.loadCart();
+    this.basketService.getBasket().subscribe(items => {
+      this.cartItems = items;
+      this.calculateTotal();
+    });
   }
 
   loadCart() {
     this.isLoading = true;
-    this.cartService.getBasket().subscribe({
-      next: (res: any) => {
-        // Normalize items to ensure name, price, quantity exist
-        this.cartItems = this.normalizeItems(res);
+    this.basketService.getBasket().subscribe({
+      next: (items) => {
+        this.cartItems = items;
         this.calculateTotal();
         this.isLoading = false;
       },
       error: (err) => {
-        console.error('Error loading basket:', err);
+        console.error('Error loading cart:', err);
+        this.isLoading = false;
         this.cartItems = [];
         this.total = 0;
-        this.isLoading = false;
       }
     });
   }
 
-  normalizeItems(res: any): Basket[] {
-    // If the basket items already contain name/price, return as is
-    // Otherwise, enrich them from localStorage
-    const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
-    return localCart.map((item: any) => {
-      return {
-        productId: item.productId,
-        quantity: item.quantity,
-        price: item.price,
-        name: item.name || 'Unknown Product',
-        image: item.image || ''
-      };
-    });
-  }
-
   calculateTotal() {
-    this.total = this.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    this.total = this.cartItems.reduce((sum, item) =>
+      sum + (item.product.price * item.quantity), 0
+    );
   }
 
   updateItem(item: Basket) {
-    // Update quantity in localStorage
-    const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const found = localCart.find((i: any) => i.productId === item.productId);
-    if (found) found.quantity = item.quantity;
-    localStorage.setItem('cart', JSON.stringify(localCart));
-    this.calculateTotal();
+    if (item.quantity < 1) {
+      item.quantity = 1;
+    }
+
+    this.basketService.updateItem(item.product.id, item.quantity, item.price).subscribe({
+      next: () => {
+        this.calculateTotal();
+      },
+      error: (err) => {
+        console.error('Errori ar updatdeba:', err);
+      }
+    });
   }
 
   removeItem(item: Basket) {
-    // Remove from localStorage and array
-    let localCart = JSON.parse(localStorage.getItem('cart') || '[]');
-    localCart = localCart.filter((i: any) => i.productId !== item.productId);
-    localStorage.setItem('cart', JSON.stringify(localCart));
-    this.cartItems = this.cartItems.filter(i => i.productId !== item.productId);
-    this.calculateTotal();
+    this.basketService.removeItem(item.product.id).subscribe({
+      next: () => {
+        this.cartItems = this.cartItems.filter(i => i.product.id !== item.product.id);
+        this.calculateTotal();
+      },
+      error: (err) => {
+        console.error('Error removing item:', err);
+      }
+    });
   }
 
-  clearCart() {
-    localStorage.removeItem('cart');
-    this.cartItems = [];
-    this.total = 0;
-  }
   checkout() {
-    alert('Checkout functionality is not implemented yet.');
+    console.log('Proceeding to checkout with total:', this.total);
   }
-
-
 }

@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs';
+import { throwError } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
+  private baseUrl = 'https://restaurant.stepprojects.ge/api/Categories';
 
-  constructor(private httpCategory: HttpClient ) { }
+  constructor(private http: HttpClient) {}
 
   getCategories() {
-    return this.httpCategory.get('https://restaurant.stepprojects.ge/api/Categories/GetAll');
+    return this.http.get(`${this.baseUrl}/GetAll`)
   }
-  getcategoryById(id: number) {
-    return this.httpCategory.get(`https://restaurant.stepprojects.ge/api/Categories/GetCategory/${id}`);
-  }
+
 
 }

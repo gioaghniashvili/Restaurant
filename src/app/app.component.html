@@ -1,7 +1,8 @@
 
 
 <app-header></app-header>
+<app-front-pg *ngIf="shows"></app-front-pg>
 
 <router-outlet></router-outlet>
 
-<app-footer></app-footer>
+<app-footer *ngIf="show"></app-footer>

@@ -1,22 +1,36 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Basket } from '../models/basket';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BasketService {
+  private baseUrl = 'https://restaurant.stepprojects.ge/api/Baskets';
 
-  constructor(private httpBasket: HttpClient) { }
-  addToBasket(productId: number, quantity: number) {
-    return this.httpBasket.post('https://restaurant.stepprojects.ge/api/Basket/AddToBasket', { productId, quantity });
-  }
+  constructor(private http: HttpClient) {}
+
   getBasket() {
-    return this.httpBasket.get('https://restaurant.stepprojects.ge/api/Baskets/GetAll');
+    return this.http.get<Basket[]>(`${this.baseUrl}/GetAll`);
   }
-  removeFromBasket(productId: number) {
-    return this.httpBasket.delete(`https://restaurant.stepprojects.ge/api/Baskets/DeleteProduct/${productId}`);
+
+  addItem(productId: number, quantity: number, price: number) {
+    return this.http.post(`${this.baseUrl}/AddToBasket`, {
+      productId,
+      quantity,
+      price
+    });
   }
-  updateBasket(productId: number, quantity: number) {
-    return this.httpBasket.put('https://restaurant.stepprojects.ge/api/Basket/UpdateBasket', { productId, quantity });
+
+  updateItem(productId: number, quantity: number, price: number) {
+    return this.http.put(`${this.baseUrl}/UpdateBasket`, {
+      productId,
+      quantity,
+      price
+    });
+  }
+
+  removeItem(productId: number) {
+    return this.http.delete(`${this.baseUrl}/DeleteProduct/${productId}`);
   }
 }

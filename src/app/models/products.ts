@@ -9,6 +9,6 @@ export class Product {
     spiciness!: number;
     image!: string;
     categoryId!: number;
-description: any;
-imageUrl: any;
+    description: any;
+    imageUrl: any;
 }

@@ -1,17 +1,23 @@
 nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 20px;
   background-color: #ce754f;
   color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
 
   .logo {
+    width: 50%;
     h2 {
       margin: 0;
     }
   }
   .nav-links {
+    width: 50%;
     display: flex;
     list-style: none;
     gap: 20px;
@@ -20,8 +26,6 @@ nav {
         text-decoration: none;
         color: white;
         font-weight: 500;
-
-        &.active,
         &:hover {
             border-bottom: 2px solid white;
         }
@@ -37,13 +41,19 @@ nav {
   }
 }
 
-
+.Restaurant {
+    text-decoration: none;
+    color: white;
+}
 .mobile-menu {
   display: none;
   flex-direction: column;
   padding: 10px 20px;
   background-color: #ce754f;
-
+  position: sticky;
+  top: 60px;
+  width: 100%;
+  z-index: 1000;
   ul {
     display: flex;
     flex-direction: row; 
@@ -56,7 +66,6 @@ nav {
         text-decoration: none;
         color: white;
         font-weight: 500;
-        &.active,
         &:hover {
             border-bottom: 2px solid white;
         }

@@ -1,11 +1,15 @@
 <nav>
   <div class="logo">
-    <h2>Restaurant</h2>
+    <a href="" class="Restaurant"><h2>Restaurant</h2></a>
   </div>
 
   <ul class="nav-links">
     <li><a routerLink="/" routerLinkActive="active">Home</a></li>
     <li><a routerLink="/cart" routerLinkActive="active">Cart</a></li>
+    <li *ngIf="!isLoggedIn"><a routerLink="/register" routerLinkActive="active">Register</a></li>
+    <li *ngIf="!isLoggedIn"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+    <li *ngIf="isLoggedIn"><a (click)="logOut()">Logout</a></li>
+  
   </ul>
 
   <div class="mobile-burger" (click)="toggleMenu()">
@@ -21,5 +25,8 @@
   <ul>
     <li><a routerLink="/" routerLinkActive="active" (click)="toggleMenu()">Home</a></li>
     <li><a routerLink="/cart" routerLinkActive="active" (click)="toggleMenu()">Cart</a></li>
+    <li><a routerLink="/register" routerLinkActive="active" (click)="toggleMenu()">Register</a></li>
+    <li><a routerLink="/login" routerLinkActive="active" (click)="toggleMenu()">Login</a></li>
+    <li *ngIf="isLoggedIn"><a (click)="logOut()">Logout</a></li>
   </ul>
 </div>

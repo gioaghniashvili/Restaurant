@@ -18,8 +18,16 @@ export const routes: Routes = [
         loadComponent: ( )=> import('./cart/cart.component').then(m => m.CartComponent)
     },
     {
+        path: 'register',
+        loadComponent: ( )=> import('./register/register.component').then(m => m.RegisterComponent)
+    },
+    {
+        path: 'login',
+        loadComponent: ( )=> import('./login/login.component').then(m => m.LoginComponent)
+    },
+    {
         path: '**',
-        loadComponent: ( )=> import('./error/error.component').then(m => m.ErrorComponent)
+        component: ErrorComponent
     }
     
 ];

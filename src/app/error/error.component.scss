@@ -1,0 +1,29 @@
+    .errorCont {
+        text-align: center;
+        margin-top: 100px;
+    
+
+    .error404 {
+        font-size: 96px;
+        color: #ff1702;
+        margin-bottom: 20px;
+    }
+
+    .errorNOTFound {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .home {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #ff3e2c;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        &:hover {
+            background-color: #e65b50;
+        }
+    }
+}
