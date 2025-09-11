@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Basket } from '../models/basket';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,12 @@ export class BasketService {
 
   constructor(private http: HttpClient) {}
 
+  private errorHandling(error: any) {
+    console.error('An error occurred:', error);
+    return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
   getBasket() {
-    return this.http.get<Basket[]>(`${this.baseUrl}/GetAll`);
+    return this.http.get<Basket[]>(`${this.baseUrl}/GetAll`).pipe(catchError(this.errorHandling));
   }
 
   addItem(productId: number, quantity: number, price: number) {
@@ -19,7 +24,7 @@ export class BasketService {
       productId,
       quantity,
       price
-    });
+    }).pipe(catchError(this.errorHandling));
   }
 
   updateItem(productId: number, quantity: number, price: number) {
@@ -27,10 +32,10 @@ export class BasketService {
       productId,
       quantity,
       price
-    });
+    }).pipe(catchError(this.errorHandling));
   }
 
   removeItem(productId: number) {
-    return this.http.delete(`${this.baseUrl}/DeleteProduct/${productId}`);
+    return this.http.delete(`${this.baseUrl}/DeleteProduct/${productId}`).pipe(catchError(this.errorHandling));
   }
 }

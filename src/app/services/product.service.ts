@@ -16,12 +16,7 @@ export class ProductService {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
   getdata(url : string) {
-    return this.http.get(url).pipe(
-        catchError(error => {
-            console.error('Error fetching data:', error);
-            return throwError(() => new Error('Error fetching data, please try again later.'));
-        })
-    );
+    return this.http.get(url).pipe(catchError(this.errorHandling));
   }
   postData(url: string, obj: any) {
     return this.http.post(url, obj).pipe(catchError(this.errorHandling));
