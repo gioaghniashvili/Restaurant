@@ -25,8 +25,8 @@
   <ul>
     <li><a routerLink="/" routerLinkActive="active" (click)="toggleMenu()">Home</a></li>
     <li><a routerLink="/cart" routerLinkActive="active" (click)="toggleMenu()">Cart</a></li>
-    <li><a routerLink="/register" routerLinkActive="active" (click)="toggleMenu()">Register</a></li>
-    <li><a routerLink="/login" routerLinkActive="active" (click)="toggleMenu()">Login</a></li>
+    <li *ngIf="!isLoggedIn"><a routerLink="/register" routerLinkActive="active" (click)="toggleMenu()">Register</a></li>
+    <li *ngIf="!isLoggedIn"><a routerLink="/login" routerLinkActive="active" (click)="toggleMenu()">Login</a></li>
     <li *ngIf="isLoggedIn"><a (click)="logOut()">Logout</a></li>
   </ul>
 </div>

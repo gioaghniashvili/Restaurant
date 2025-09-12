@@ -25,7 +25,10 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.15);
             transition: all 0.3s ease;
-                
+             &:active {
+                  background-color:  darken(#f08a5d, 20%) !important;
+                  color: white;
+              }   
             &:hover {
               background-color: darken(#f08a5d, 3%);
               transform: translateY(-2px);

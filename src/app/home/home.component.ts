@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
     providers: [CategoryService, ProductService]
 })
 export class HomeComponent {
-
+ 
   constructor(
       private basketService: BasketService,
       private categoryService: CategoryService,
@@ -45,8 +45,9 @@ export class HomeComponent {
   this.products = data;
 });
   }
-  
+ 
 filterBtn() {
+    this.selectedCategoryId = 0;
   this.productService.getdata(
     `https://restaurant.stepprojects.ge/api/Products/GetFiltered?vegetarian=${this.vegetarian}&nuts=${this.nuts}${this.spiciness != null ? '&spiciness=' + this.spiciness : ''}`
   ).subscribe((data: any) => {
@@ -56,9 +57,10 @@ filterBtn() {
     console.error('Error fetching data:', error);
   });
 }
-
-
+ 
+ 
   resetFilters() {
+      this.selectedCategoryId = 0;
        this.productService.getdata('https://restaurant.stepprojects.ge/api/Products/GetAll').subscribe((data: any) => {
        this.products = data;
       this.vegetarian = false;
@@ -66,17 +68,19 @@ filterBtn() {
       this.spiciness = Number(null);
       console.log(this.products)
     })
-
+ 
 }
 getProductsByCategory(categoryId: number){
     return this.products.filter(product => product.categoryId === categoryId);
   }
-
+ 
+ 
 filterByCategory(categoryId: number) {
+    this.selectedCategoryId = categoryId;
   const url = categoryId === 0
       ? 'https://restaurant.stepprojects.ge/api/Products/GetFiltered'
       : `https://restaurant.stepprojects.ge/api/Products/GetFiltered?categoryId=${categoryId}`;
-
+ 
   this.productService.getdata(url).subscribe(
     (data: any) => {
       this.products = data;
@@ -87,7 +91,7 @@ filterByCategory(categoryId: number) {
     }
   );
 }
-  
+ 
 addToCart(product: Product) {
   if (!localStorage.getItem("token")) {
     Swal.fire({
@@ -100,10 +104,10 @@ addToCart(product: Product) {
     });
     return;
   }
-
+ 
   this.basketService.getBasket().subscribe(cartItems => {
     let existingItem = cartItems.find(item => item.product.id === product.id);
-
+ 
     if (existingItem) {
       let updatedQty = existingItem.quantity + 1;
       this.basketService.updateItem(product.id, updatedQty, updatedQty * product.price)
@@ -131,8 +135,8 @@ addToCart(product: Product) {
     }
   });
 }
-
-
-
-
+ 
+ 
+ 
+ 
 }
