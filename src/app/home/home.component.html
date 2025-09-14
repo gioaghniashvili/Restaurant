@@ -32,6 +32,7 @@
  
         <button class="filterBtn" (click)="filterBtn()">Filter</button>
         <button class="Reset" (click)="resetFilters()">Reset</button>
+        <input class="liveSearch" type="text"  placeholder="Search..." [(ngModel)]="searchTerm" (input)="liveSearch()">
     </div>
 </div>
  

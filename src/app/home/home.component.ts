@@ -22,7 +22,8 @@ export class HomeComponent {
       private basketService: BasketService,
       private categoryService: CategoryService,
       private productService: ProductService
-  )   { }
+  )   {}
+    searchTerm: string = '';
     imageURL: string = '';
     cart: Basket[] = [];
     categories: Category[] = [];
@@ -31,19 +32,31 @@ export class HomeComponent {
     spiciness! : number;
     nuts= false;
     vegetarian= false;
+    isFiltered = false;
   ngOnInit() {
         this.fetchCategories();
         this.fetchProducts();
   }
   fetchCategories() {
-      this.categoryService.getCategories().subscribe((data: any) => {
+          this.categoryService.getCategories().subscribe((data: any) => {
           this.categories = data;
       });
   }
   fetchProducts() {
       this.productService.getdata('https://restaurant.stepprojects.ge/api/Products/GetAll').subscribe((data: any) => {
-  this.products = data;
+      this.products = data;
 });
+  }
+  
+  liveSearch() {
+    this.isFiltered = true;
+    this.products = this.products.filter(product => 
+      product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    if (this.searchTerm === '') {
+      this.fetchProducts();
+      this.isFiltered = false;
+    }
   }
  
 filterBtn() {
