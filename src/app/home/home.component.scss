@@ -8,12 +8,14 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+  
   .btns {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    
     button {
       background-color: #f08a5d;
       border: none;
@@ -25,7 +27,7 @@
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
       transition: all 0.3s ease;
- 
+
       &:hover {
         background-color: darken(#f08a5d, 3%);
         transform: translateY(-2px);
@@ -33,7 +35,7 @@
     }
   }
 }
- 
+
 .flexcards {
   width: 100%;
   display: flex;
@@ -42,6 +44,7 @@
   gap: 20px;
   margin-top: 20px;
 }
+
 .cards {
   width: 80%;
   display: flex;
@@ -49,6 +52,7 @@
   justify-content: center;
   gap: 20px;
   margin-top: 20px;
+  
   .card {
     background-color: #fff0e6;
     border: 2px solid #f08a5d;
@@ -61,36 +65,36 @@
     flex-direction: column;
     align-items: center;
     transition: all 0.3s ease;
- 
+
     &:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
- 
+
     img {
       width: 100%;
       height: auto;
       border-radius: 8px;
       margin-bottom: 15px;
     }
- 
+
     h3 {
       margin: 10px 0;
       color: #d35400;
     }
- 
+
     p {
       color: #7f8c8d;
       font-size: 14px;
       margin-bottom: 15px;
     }
- 
+
     .price {
       font-weight: bold;
       color: #e74c3c;
       margin-bottom: 15px;
     }
- 
+
     .btn {
       background-color: #f08a5d;
       border: none;
@@ -105,7 +109,7 @@
       cursor: pointer;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
- 
+
       &:hover {
         background-color: darken(#f08a5d, 3%);
         transform: translateY(-2px);
@@ -113,15 +117,16 @@
     }
   }
 }
- 
+
 .filteredBoxes {
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   gap: 20px;
   margin-top: 20px;
 }
+
 .filterBox {
   width: 80%;
   background-color: #fff0e6;
@@ -133,29 +138,33 @@
   align-items: center;
   gap: 20px;
   justify-content: center;
+  
   .spicy {
     display: flex;
     align-items: center;
     gap: 5px;
     flex-direction: column;
+    
     .inputRange {
       width: 150px;
       accent-color: #f08a5d;
       margin-top: 10px;
     }
   }
- 
+
   .nuts {
     display: flex;
     align-items: center;
     gap: 5px;
   }
+  
   .vegetarian {
     display: flex;
     align-items: center;
     gap: 5px;
   }
 }
+
 .filterBtn {
   background-color: #f08a5d;
   border: none;
@@ -167,16 +176,18 @@
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
- 
+
   &:hover {
     background-color: darken(#f08a5d, 3%);
     transform: translateY(-2px);
   }
 }
+
 .active {
   background-color: darken(#f08a5d, 20%) !important;
   color: white;
 }
+
 .liveSearch {
   padding: 10px;
   border: 2px solid #f08a5d;
@@ -191,6 +202,7 @@
     outline: none;
   }
 }
+
 .Reset {
   background-color: #f08a5d;
   border: none;
@@ -202,38 +214,49 @@
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
- 
+
   &:hover {
     background-color: darken(#f08a5d, 3%);
     transform: translateY(-2px);
   }
 }
- 
+
+@media screen and (max-width: 1200px) {
+  .filterBox {
+    flex-wrap: wrap;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .cards {
     width: 100%;
     flex-direction: column;
     align-items: center;
   }
+  
   .filterBox {
-    width: 70%;
+    width: 90%;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    padding: 15px;
   }
+  
   .BtnsForAll {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
- 
-    button {
-      width: 80%;
-      text-align: center;
+    flex-direction: column;
+    align-items: center;
+    
+    .btns {
+      flex-direction: column;
+      width: 100%;
+      
+      button {
+        width: 90%;
+        margin: 5px 0;
+      }
     }
   }
+  
   .filteredBoxes {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
+    gap: 15px;
   }
 }
- 
